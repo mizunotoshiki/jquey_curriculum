@@ -34,6 +34,41 @@
       // .data() 要素のdata属性を取得します。
       // .width() 要素の幅を取得します。
       // .length 要素の個数を取得します。
+
+      // クリックされた分の数値を変数として持たせる
+      var curentSlide = 0;
+      $('.is-next').click(function(){
+        curentSlide ++ ;
+        if(curentSlide > 3){
+          curentSlide = $(imgs).length-4;
+          // curentSlide ===0;だと処理されない
+        }
+      })
+      $('.is-prev').click(function(){
+        curentSlide -- ;
+        if (curentSlide < 0){
+          curentSlide = $(imgs).length-1;
+        }
+      })
+      // 画像の配置を配列を使い数式として定義する
+      var imgs = $('.slider-list').find('li');
+      var array = [];
+      for(var i = 0;i<$(imgs).length;i++){
+        if(i === 0){
+          array.push(i);
+        }
+        else{
+          array.push(-$(imgs).eq(i-1).width()+array[i-1]);
+          // $(imgs).eq(i-1).width()で表示したい画像の1枚前のみのwidthを取得
+          // array[i-1]で最初の画像から表示したい画像の一つ手前までのwidthを取得
+        }
+      }
+      // 上の二つの処理をもとに表示する
+      $('.is-next,.is-prev').click(function(){
+        $('.slider-list').animate({
+          'left':array[curentSlide]
+        })
+      })
     </script>
   </body>
 </html>

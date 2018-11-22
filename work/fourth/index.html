@@ -56,12 +56,12 @@
       // .next() 要素の隣の要素を取得します。
       // .children() 要素の子要素を取得します。
       // .stop() 現在動作中のアニメーション処理を全て中止します。
-      $(".menu__list").find("li").hover(
+      $('.menu__list').find('li').hover(
         function(){
-          $(this).children("p").next().stop().slideDown();
+          $(this).children('p').next().stop().slideDown();
         },
         function(){
-          $(this).children("p").next().stop().slideUp();
+          $(this).children('p').next().stop().slideUp();
         });
       // nextを使わずに.children("ul")でも同じ処理
     </script>

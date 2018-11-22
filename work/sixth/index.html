@@ -26,7 +26,16 @@
       // .keyup() 文字入力後に発火されるイベントです。
       // .replace(/\s+/g,'').length 改行を含まない文字数を取得します。
       // .val() input要素のvalueを取得します。
+      $('.input').keyup(function(){
+        var check =30-$(this).val().replace(/\s+/g,'').length;
+        $('.rest-count').text(check);
+        if(check < 0){
+          $('.rest-count').addClass('red');
+        }
+        else{
+          $('.rest-count').removeClass('red');
+        }
+      });
     </script>
   </body>
 </html>
-
