@@ -23,7 +23,7 @@
       // .html() 要素の中に引数を代入する。
       // $.ajax({}) 外部ファイルやURLに対してデータをリクエストすることができます。これだけだと少しわからないと思うので下に文法を書いておきます。
       //
-      [文法]
+      // [文法]
       // $.ajax({
       //   url: './data.json'
       // })
@@ -45,6 +45,20 @@
       // </li>
       //
       // このテンプレートに取得してきたオブジェクトを流し込みます。
+
+      $.ajax({
+        url: './data.json'
+      })
+      .done(function(data) {
+        var list = "";
+        $.each(data.colorsArray,function(i,item){
+          var colorName = item.colorName;
+          var hexValue = item.hexValue;
+          list += '<li class="colorList__item">' + '<p class="colorList__title" style="background-color:' + hexValue + ';">' + colorName + '</p>' + '</li>'
+        })
+        $('.colorList').append(list);
+      })
+      // dataオブジェクトのなかのキー名(colorArray)と値(配列)が紐付いてその配列の中に7つのオブジェクトがある状態
     </script>
   </body>
 </html>

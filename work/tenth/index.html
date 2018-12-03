@@ -64,6 +64,73 @@
       //   // この中にデータ取得後の動きを記述していきます。
       // });
       //
+      $('.search__btn').click(function(){
+        request();
+      })
+      function request(){
+        // request関数でajaxとdoneを実行させる
+        $.ajax({
+          url: 'https://app.rakuten.co.jp/services/api/BooksTotal/Search/20130522',
+          type: 'GET',
+          datatype: 'json',
+          data: {
+            // 「区分:サービス固有パラメーター」を確認して、必要な情報をdata内に入れましょう。
+            applicationId: '1019399324990976605', // (今回はこのIDを使用してください)
+            booksGenreId: '001',
+            keyword: $('#js-search-word').val(),
+            hits:20
+          }
+        })
+        .done(function(data) {
+          // この中にデータ取得後の動きを記述していきます。
+          // done(通信成功)処理はbooks関数で処理を実行
+          books(data);
+        })
+        .fail(function(){
+          alert('error');
+        })
+      }
+      function books(data){
+        var selectItems = '';
+        $.each(data.Items,function(i,item){
+          // 表示させたい項目の配列を繰り返し処理させながら変数に代入
+          var itemUrl = item.Item.itemUrl;
+          var largeImageUrl = item.Item.largeImageUrl;
+          var title = item.Item.title;
+          var author = item.Item.author;
+          var publisherName = item.Item.publisherName;
+          // 変数と+=を用いて繰り返し処理された配列とhtml文を組み合わせて表示させたいコードをselectItemsに代入
+          selectItems +=
+          '<li class="lists__item">'+
+            '<div class="lists__item__inner">'+
+              '<a href="' + itemUrl + '"class="lists__item__link" target="_blank">'+
+                '<img src="' + largeImageUrl + '"class="lists__item__img"  alt=' + title + '>'+
+                '<p class="lists__item__detail">' + '作品名：' + title + '</p>'+
+                '<p class="lists__item__detail">' + '作者　：' + author + '</p>'+
+                '<p class="lists__item__detail">' + '出版社：' + publisherName + '</p>'+
+              '</a>'+
+            '</div>'+
+          '</li>';
+        })
+        if(selectItems === ""){
+          // 検索結果が0の場合serchクラスの隣にnoResultsクラスを追加
+          $('.search').next().html(
+          '<div class="noResults" style="text-align:center;">'+
+            "検索結果が見つかりませんでした。"+'<br>'+
+            "別のキーワードで検索して下さい。"+
+          '</div>'
+          )
+        }
+        else{
+          $('.lists').html(selectItems);
+        }
+      }
+        // httpメソッドのGETとPOSTの説明
+        // APIの説明
+        // 検索結果を20件表示（ページ送りはなし）
+        // 検索結果が0件のときの処理
+        // 通信失敗時（fail）の処理（見本にはない）
+        // 関数を処理単位で分ける（ajaxのdone、clickの中身が長くなるのを避ける）
     </script>
   </body>
 </html>

@@ -45,11 +45,11 @@
       $('.menu__btn').click(function(){
         var dataName = $(this).data('scroll-place-type');
         var scrollCount = $('p[data-scroll-place-type=' + dataName + ']').offset().top;
-        $("html,body").animate({'scrollTop':scrollCount},);
+        $('html,body').animate({'scrollTop':scrollCount});
       })
       // animateの場合window,documentを指定しても動かない
       $('.scrollTopBtn').click(function(){
-        $("html,body").animate({'scrollTop':0},);
+        $('html,body').animate({'scrollTop':0});
       })
       $(window).scroll(function(){
         var windowScroll = $(window).scrollTop();
